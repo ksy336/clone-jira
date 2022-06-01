@@ -8,6 +8,7 @@ import { sendingFormSignUp } from '../../../store/actions/signUp-actions';
 import { FormState } from './SignUp-Types';
 
 const SignUpContainer = () => {
+
   const { name, login, password, error } = useSelector((state: RootState) => state.signUp);
   const navigate = useNavigate();
   const dispatch = useDispatch();

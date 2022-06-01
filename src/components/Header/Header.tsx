@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Layout, Menu, Form, Input, Button } from 'antd';
@@ -8,13 +8,16 @@ import { dispatchStore, RootState } from '../../types/types';
 import { clearUserData } from '../../store/slices/logout-slice';
 import getNewBoard from '../../store/actions/newBoard-actions';
 import { createNewBoardTitle, createNewBoardDescription } from '../../store/slices/board-slice';
-const { Header } = Layout;
+const { Header: HeaderComponent } = Layout;
+import useSticky from '../../hooks/useSticky';
+import "./Header.scss";
 
 const HeaderMenu = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showNewBoardModal, setShowNewBoardModal] = useState(false);
+  const {sticky, headerRef} = useSticky();
   const { title, description } = useSelector((state: RootState) => state.board);
   const onChange = () => {};
   const signOutClick = () => {
@@ -125,11 +128,15 @@ const HeaderMenu = () => {
           </Form>
         </Modal>
       )}
-      <Layout style={{ position: 'sticky', top: 0, zIndex: 1, marginBottom: '50px' }}>
-        <Header style={{ zIndex: 1, width: '100%', background: 'white' }}>
-            <Menu theme="light" mode="horizontal" items={menuItems} />
-        </Header>
-      </Layout>
+
+      <HeaderComponent
+        className={`layout-header ${sticky ? "is-sticky" : ""}`}
+        ref={headerRef}
+      >
+        <div style={{ zIndex: 1, width: '100%', margin: "0 auto"  }}>
+          <Menu style={{ background: "transparent", display: "flex", justifyContent: "flex-end"}} items={menuItems} />
+        </div>
+      </HeaderComponent>
     </>
   )
 };
