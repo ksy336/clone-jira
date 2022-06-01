@@ -1,0 +1,13 @@
+.layout-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin-bottom: 50px;
+  background: white;
+}
+
+.is-sticky {
+  background: #aea4e3;
+}
+
+/*# sourceMappingURL=Header.css.map */
