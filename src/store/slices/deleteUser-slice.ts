@@ -20,7 +20,6 @@ const deleteUserSlice = createSlice({
       state.id = action.payload;
       removeCookie("jwt");
       removeCookie("id");
-      // storage.removeItem('persist:root');
     },
     showError(state, action) {
       state.error = action.payload;

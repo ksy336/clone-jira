@@ -4,6 +4,7 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export const dispatchStore = store.dispatch;
 
+
 export interface InitialSignInState {
   login: string;
   password: string;
@@ -12,7 +13,9 @@ export interface InitialSignInState {
     password: string;
   };
   token: string | null;
+  isAuth: boolean;
   error?: null | string;
+  isLoading: boolean;
 }
 
 export interface InitialSignUpState {
@@ -20,10 +23,15 @@ export interface InitialSignUpState {
   login: string;
   password: string;
   confirmPassword?: string;
-  userData?: {
-    id: string;
-    name: string;
-    login: string;
-  };
+  userData?: {};
   error?: null | string;
+  isLoading: boolean;
+}
+export interface BoardState {
+  title: string;
+  description: string;
+  id: string
+  error: null | string;
+  boardItems: any[];
+  boardData: {};
 }

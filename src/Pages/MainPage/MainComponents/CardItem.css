@@ -1,0 +1,12 @@
+.card-board {
+  width: 300px;
+  margin-left: 70px;
+  margin-top: 40px;
+}
+.card-board:hover {
+  cursor: pointer;
+  transform: translateZ(3.5rem);
+  box-shadow: 0 0.5rem 1rem grey;
+}
+
+/*# sourceMappingURL=CardItem.css.map */

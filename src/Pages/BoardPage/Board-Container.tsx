@@ -1,7 +1,8 @@
 import React from 'react';
+import BoardView from './Board-View';
 
 const BoardContainer = () => {
-  return <div></div>;
+  return (<BoardView />);
 };
 
 export default BoardContainer;

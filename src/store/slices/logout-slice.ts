@@ -16,7 +16,6 @@ const logout = createSlice({
     clearUserData() {
       removeCookie("id");
       removeCookie("jwt");
-      // в dispatch прописать storage.removeItem('persist:root')
     },
   },
 });

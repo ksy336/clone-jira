@@ -10,12 +10,6 @@ const Footer = () => {
           <a href="https://github.com/ksy336" target="_blank" rel="noreferrer">
             Kseniya Klimova
           </a>
-          <a href="https://github.com/goldyukol" target="_blank" rel="noreferrer">
-            Yury Kalenkou
-          </a>
-          <a href="https://github.com/halaveika" target="_blank" rel="noreferrer">
-            Aliaksandr Halaveika
-          </a>
         </div>
         <div>
           <p>2022</p>

@@ -10,6 +10,8 @@ const initialState: InitialSignInState = {
   },
   token: '',
   error: null,
+  isAuth: false,
+  isLoading: false,
 };
 
 const signInData = createSlice({
@@ -28,9 +30,15 @@ const signInData = createSlice({
     getToken(state, action) {
       state.token = action.payload;
     },
+    getAuth(state, action) {
+      state.isAuth = action.payload;
+    },
     showError(state, action) {
       state.error = action.payload;
     },
+    setIsLoading(state, action) {
+      state.isLoading = action.payload;
+    }
   },
 });
 export const {
@@ -39,6 +47,8 @@ export const {
   getLoginDataFromUser,
   getToken,
   showError,
+  getAuth,
+  setIsLoading
 } = signInData.actions;
 
 export default signInData.reducer;

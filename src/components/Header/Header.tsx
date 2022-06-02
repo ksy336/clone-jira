@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Layout, Menu, Form, Input, Button } from 'antd';
@@ -10,14 +10,15 @@ import getNewBoard from '../../store/actions/newBoard-actions';
 import { createNewBoardTitle, createNewBoardDescription } from '../../store/slices/board-slice';
 const { Header: HeaderComponent } = Layout;
 import useSticky from '../../hooks/useSticky';
-import "./Header.scss";
+import { getAuth } from '../../store/slices/signin-slice';
+import './Header.scss';
 
 const HeaderMenu = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showNewBoardModal, setShowNewBoardModal] = useState(false);
-  const {sticky, headerRef} = useSticky();
+  const { sticky, headerRef } = useSticky();
   const { title, description } = useSelector((state: RootState) => state.board);
   const onChange = () => {};
   const signOutClick = () => {
@@ -29,6 +30,7 @@ const HeaderMenu = () => {
 
   const logoutHandler = () => {
     dispatchStore(clearUserData());
+    dispatch(getAuth(false));
     navigate('/');
   };
   const modalHandler = () => {
@@ -43,7 +45,7 @@ const HeaderMenu = () => {
     dispatchStore(getNewBoard(boardData));
     setShowNewBoardModal(false);
   };
-  const menuItems:ItemType[]  = [
+  const menuItems: ItemType[] = [
     {
       key: 'edit',
       icon: <Link to="/edit">Edit profile</Link>,
@@ -51,18 +53,18 @@ const HeaderMenu = () => {
     {
       key: 'out',
       label: 'Sign Out',
-      onClick: signOutClick
+      onClick: signOutClick,
     },
     {
       key: 'board',
       label: 'Create new board',
-      onClick: createBoardClick
+      onClick: createBoardClick,
     },
     {
       key: 'switch',
-      icon: <Switch defaultChecked onChange={onChange} />
-    }
-  ]
+      icon: <Switch defaultChecked onChange={onChange} />,
+    },
+  ];
 
   return (
     <>
@@ -129,15 +131,15 @@ const HeaderMenu = () => {
         </Modal>
       )}
 
-      <HeaderComponent
-        className={`layout-header ${sticky ? "is-sticky" : ""}`}
-        ref={headerRef}
-      >
-        <div style={{ zIndex: 1, width: '100%', margin: "0 auto"  }}>
-          <Menu style={{ background: "transparent", display: "flex", justifyContent: "flex-end"}} items={menuItems} />
+      <HeaderComponent className={`layout-header ${sticky ? 'is-sticky' : ''}`} ref={headerRef}>
+        <div style={{ zIndex: 1, width: '100%', margin: '0 auto' }}>
+          <Menu
+            style={{ background: 'transparent', display: 'flex', justifyContent: 'flex-end' }}
+            items={menuItems}
+          />
         </div>
       </HeaderComponent>
     </>
-  )
+  );
 };
 export default HeaderMenu;

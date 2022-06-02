@@ -1,17 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { BoardState } from '../../types/types';
 
-export interface BoardState {
-  title: string;
-  description: string;
-  id: string
-  error: null | string;
-  boardItems: any[];
-}
-const initialState:BoardState = {
+const initialState: BoardState = {
   title: "",
   description: "",
   id: "",
   boardItems: [],
+  boardData: {},
   error: null,
 
 }
@@ -37,8 +32,19 @@ const boardSlice = createSlice({
     removeBoard(state, action) {
       const id = action.payload;
       state.boardItems = state.boardItems.filter((board) => board.id !== id);
+    },
+    getBoardData(state, action) {
+      state.boardData = action.payload;
     }
   }
 });
-export const {createNewBoardTitle, createNewBoardDescription, createNewBoardId, createBoardItem, removeBoard, showError} = boardSlice.actions;
+export const {
+  createNewBoardTitle,
+  createNewBoardDescription,
+  createNewBoardId,
+  createBoardItem,
+  removeBoard,
+  showError,
+  getBoardData
+} = boardSlice.actions;
 export default boardSlice.reducer;

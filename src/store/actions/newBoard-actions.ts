@@ -1,7 +1,7 @@
 import axios from "axios";
 import {showError, createBoardItem, createNewBoardId} from "../slices/board-slice";
 import { getTokenFromCookie } from '../../common/helper';
-import storage from 'redux-persist/lib/storage';
+import { API_URL } from '../../common/constants';
 
 const getNewBoard = (boardFormData) => {
   return async(dispatch) => {
@@ -14,13 +14,12 @@ const getNewBoard = (boardFormData) => {
            Authorization: `Bearer ${getTokenFromCookie()}`,
         },
       }
-      const response = await axios.post("https://fathomless-savannah-49484.herokuapp.com/boards", boardFormData, options);
+      const response = await axios.post(`${API_URL}boards`, boardFormData, options);
       if(!response) {
         throw new Error("Something went wrong!");
       }
       dispatch(createBoardItem(response.data));
       dispatch(createNewBoardId(response.data.id));
-      storage.removeItem('persist:root');
       return response.data;
     }
     try {

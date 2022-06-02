@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Card, Button } from 'antd';
-import Modal from '../../components/Modal/Modal';
-import deleteBoard from '../../store/actions/deleteBoard-actions';
-import { removeBoard } from '../../store/slices/board-slice';
-import { dispatchStore, RootState } from '../../types/types';
+import Modal from '../../../components/Modal/Modal';
+import deleteBoard from '../../../store/actions/deleteBoard-actions';
+import { removeBoard } from '../../../store/slices/board-slice';
+import { dispatchStore, RootState } from '../../../types/types';
+import getBoardById from '../../../store/actions/getBoardById-actions';
+import "./CardItem.scss";
 
 const CardItem = (props) => {
+  const navigate = useNavigate();
   const { id, title, description } = props.item;
   const [showModal, setShowModal] = useState(false);
   const boardItems = useSelector((state: RootState) => state.board.boardItems);
@@ -30,6 +33,10 @@ const CardItem = (props) => {
   const modalHandler = () => {
     setShowModal(false);
   };
+  const boardHandler = () => {
+    dispatchStore(getBoardById(id));
+    navigate(`/board/${id}`);
+  }
 
   return (
     <>
@@ -50,15 +57,14 @@ const CardItem = (props) => {
       )}
       <div className="site-card-border-less-wrapper">
         {error && <p>Deleting board failed!</p>}
-        <Link to="/board">
           <Card
             title={title}
             bordered={false}
-            style={{ width: 300, marginLeft: 70, marginTop: 40 }}
+            className="card-board"
+            onClick={boardHandler}
           >
             <p>{description}</p>
           </Card>
-        </Link>
         <Button
           type="primary"
           onClick={deleteBoardHandler}

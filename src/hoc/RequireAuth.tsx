@@ -3,9 +3,8 @@ import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../types/types';
 
-const RequireAuth = ({ children }) => {
-  const token = useSelector((state: RootState) => state.signIn.token);
-  //const token = getCookie('jwt');
-  return !token ? <Navigate to="/" /> : children;
+const RequireAuth = ({ isAuth, children }) => {
+  const auth = useSelector((state: RootState) => state.signIn.isAuth);
+  return !auth ? <Navigate to="/" /> : children;
 };
 export { RequireAuth };

@@ -1,12 +1,14 @@
 import axios from 'axios';
-import { getCookie, setCookie } from 'typescript-cookie';
-import { getToken, showError } from '../slices/signin-slice';
+import { setCookie } from 'typescript-cookie';
+import { getToken, showError, getAuth, setIsLoading } from '../slices/signin-slice';
 import { getTokenFromCookie } from '../../common/helper';
+import { API_URL } from '../../common/constants';
 
 export const sendingSignInData = (signInData) => {
   return async (dispatch) => {
     dispatch(showError(null));
     const sendRequestSignIn = async () => {
+      dispatch(setIsLoading(true));
       const options = {
         headers: {
           'Content-Type': 'application/json',
@@ -15,7 +17,7 @@ export const sendingSignInData = (signInData) => {
         },
       };
       const response = await axios.post(
-        'https://fathomless-savannah-49484.herokuapp.com/signin',
+        `${API_URL}signin`,
         signInData,
         options
       );
@@ -24,14 +26,16 @@ export const sendingSignInData = (signInData) => {
       }
 
       const token = response.data.token;
-      setCookie('jwt', token, { expires: 1 });
+      setCookie('jwt', token, { expires: 2 });
       dispatch(getToken(token));
       return token;
     };
     try {
       await sendRequestSignIn();
+      dispatch(getAuth(true));
     } catch (error) {
       dispatch(showError('User login already exists!"'));
     }
+    dispatch(setIsLoading(false));
   };
 };

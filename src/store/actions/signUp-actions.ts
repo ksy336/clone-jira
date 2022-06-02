@@ -1,12 +1,14 @@
 import axios from 'axios';
-import { showError } from '../slices/signUp-slice';
-import { getUserData } from '../slices/signUp-slice';
+import { getUserData, showError, setIsLoading } from '../slices/signUp-slice';
 import { setCookie } from 'typescript-cookie';
+import { API_URL } from '../../common/constants';
+
 export let savedData;
 
 export const sendingFormSignUp = (signUpData) => {
   return async (dispatch) => {
     dispatch(showError(null));
+    // dispatch(setIsLoading(true));
     const sendRequest = async () => {
       const options = {
         headers: {
@@ -15,7 +17,7 @@ export const sendingFormSignUp = (signUpData) => {
         },
       };
       const response = await axios.post(
-        'https://fathomless-savannah-49484.herokuapp.com/signup',
+        `${API_URL}signup`,
         signUpData,
         options
       );
@@ -24,7 +26,6 @@ export const sendingFormSignUp = (signUpData) => {
       if (!response) {
         throw new Error(`${response.data.message}`);
       }
-      // data хранит {id, login, name}
       const data = await response.data;
       savedData = setCookie('id', data.id, { expires: 1 });
       return data;
@@ -35,5 +36,6 @@ export const sendingFormSignUp = (signUpData) => {
     } catch (error) {
       dispatch(showError('Something went wrong!'));
     }
+    dispatch(setIsLoading(false));
   };
 };

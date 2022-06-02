@@ -7,11 +7,9 @@ const initialState: InitialSignUpState = {
   password: '',
   confirmPassword: '',
   userData: {
-    id: '',
-    name: '',
-    login: '',
   },
   error: null,
+  isLoading: false,
 };
 const signUpData = createSlice({
   name: 'signUp',
@@ -35,6 +33,9 @@ const signUpData = createSlice({
     showError(state, action) {
       state.error = action.payload;
     },
+    setIsLoading(state, action) {
+      state.isLoading = action.payload;
+    }
   },
 });
 
@@ -45,6 +46,7 @@ export const {
   getUserData,
   showError,
   getConfirmPasswordData,
+  setIsLoading
 } = signUpData.actions;
 
 export default signUpData.reducer;

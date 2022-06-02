@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'antd';
+import { Alert, Button, Spin } from 'antd';
 import {
   getNameData,
   getLoginData,
@@ -16,10 +16,20 @@ const SignUpView = ({
   register,
   dispatch,
   watch,
-  error,
+  error, isLoading
 }) => {
   return (
-    <div className="form">
+    <>
+      {isLoading && (
+        <Spin tip="Loading...">
+          <Alert
+            message="Please, wait!"
+            description="Please, wait! Your data is sending"
+            type="info"
+          />
+        </Spin>
+      )}
+     <div className="form">
       <h3>Sign Up to create an account</h3>
       <form className="form-profile" onSubmit={handleSubmit(handleFormSubmit)}>
         <div className="form-content">
@@ -66,7 +76,7 @@ const SignUpView = ({
           <label htmlFor="password">Password</label>
           <input
             name="password"
-            type="text"
+            type="password"
             id="password"
             placeholder="Enter your password"
             className={`${errors?.password ? 'input error-input' : 'input'}`}
@@ -120,6 +130,7 @@ const SignUpView = ({
         {error && <p className="text-invalid">{`${error}`}</p>}
       </form>
     </div>
+      </>
   );
 };
 export default SignUpView;

@@ -19,8 +19,6 @@ import {
 } from 'redux-persist';
 import { Cookies } from 'typescript-cookie';
 
-
-
 const rootReducer = combineReducers({
   signUp: signUpData,
   signIn: signInData,

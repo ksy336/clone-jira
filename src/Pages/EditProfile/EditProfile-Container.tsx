@@ -6,8 +6,10 @@ import { editProfileData } from '../../store/actions/edit-actions';
 import { dispatchStore, RootState } from '../../types/types';
 import { deleteUserProfile } from '../../store/actions/deleteUser-actions';
 import EditProfileView from './EditProfile-View';
-import { getToken } from '../../store/slices/signin-slice';
 import { deleteUser } from '../../store/slices/deleteUser-slice';
+import { getAuth } from '../../store/slices/signin-slice';
+import {getUserData} from "../../store/slices/signUp-slice";
+
 
 const EditProfileContainer = () => {
   const [showModal, setShowModal] = useState(false);
@@ -28,7 +30,8 @@ const EditProfileContainer = () => {
   const deleteUserModalHandler = () => {
     dispatchStore(deleteUserProfile(userId));
     dispatch(deleteUser(userId));
-    dispatchStore(getToken(""));
+    dispatch(getUserData({}));
+    dispatch(getAuth(false));
     navigate('/');
   };
 

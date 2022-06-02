@@ -2,6 +2,7 @@ import axios from "axios";
 import { AppDispatch } from '../../types/types';
 import { getTokenFromCookie } from '../../common/helper';
 import {showError} from "../slices/board-slice";
+import { API_URL } from '../../common/constants';
 
 const deleteBoard = (boardId) => {
   return async (dispatch: AppDispatch) => {
@@ -15,7 +16,7 @@ const deleteBoard = (boardId) => {
           'Access-Control-Allow-Origin': '*',
         }
       }
-      const response = await axios.delete(`https://fathomless-savannah-49484.herokuapp.com/boards/${boardId}`, options);
+      const response = await axios.delete(`${API_URL}boards/${boardId}`, options);
       if(!response) {
         throw new Error("Something went wrong!");
       }
