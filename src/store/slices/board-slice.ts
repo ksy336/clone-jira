@@ -6,9 +6,15 @@ const initialState: BoardState = {
   description: "",
   id: "",
   boardItems: [],
-  boardData: {},
+  boardData: {
+    title: "",
+    description: "",
+    id: "",
+    columns: [],
+  },
   error: null,
-
+  titleColumn: "",
+  columnId: "",
 }
 const boardSlice = createSlice({
   name: "newBoard",
@@ -35,7 +41,18 @@ const boardSlice = createSlice({
     },
     getBoardData(state, action) {
       state.boardData = action.payload;
-    }
+    },
+    getEnteredTitle(state, action) {
+      state.titleColumn = action.payload;
+    },
+    removeColumn(state, action) {
+      const id = action.payload;
+      console.log(id);
+      state.boardData.columns = state.boardData.columns.filter((column: any) => column.id !== id);
+    },
+    addColumn(state, action) {
+      state.boardData.columns = [...state.boardData.columns, action.payload];
+    },
   }
 });
 export const {
@@ -45,6 +62,9 @@ export const {
   createBoardItem,
   removeBoard,
   showError,
-  getBoardData
+  getBoardData,
+  getEnteredTitle,
+  removeColumn,
+  addColumn,
 } = boardSlice.actions;
 export default boardSlice.reducer;

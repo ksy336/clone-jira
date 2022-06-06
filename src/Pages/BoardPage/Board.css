@@ -1,16 +1,21 @@
 .column-wrapper {
   padding-bottom: 200px;
 }
+
 .flex-cards {
   display: flex;
   justify-content: flex-start;
   overflow-x: auto;
   padding-top: 50px;
 }
+
 .columns-container {
   display: flex;
   justify-content: flex-start;
 }
+
 .column-content {
   margin-left: 20px;
 }
+
+/*# sourceMappingURL=Board.css.map */

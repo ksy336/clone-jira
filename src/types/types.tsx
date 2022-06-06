@@ -26,6 +26,7 @@ export interface InitialSignUpState {
   userData?: {};
   error?: null | string;
   isLoading: boolean;
+  id: string;
 }
 export interface BoardState {
   title: string;
@@ -33,5 +34,16 @@ export interface BoardState {
   id: string
   error: null | string;
   boardItems: any[];
-  boardData: {};
+  boardData: {
+    title: string,
+    description: string,
+    id: string,
+    columns: any[],
+  };
+  titleColumn: string;
+  columnId: string;
+
+}
+export interface ColumnState {
+  columnsList: any[];
 }

@@ -5,6 +5,7 @@ import CardItem from './CardItem';
 
 
 
+
 export interface IBoard {
   title: string;
   description: string;

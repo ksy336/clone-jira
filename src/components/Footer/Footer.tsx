@@ -4,7 +4,7 @@ import './Footer.scss';
 const Footer = () => {
   return (
     <footer className="footer">
-      <div className="wrapper footer-content">
+      <div className="footer-content">
         <div className="link">
           Development:
           <a href="https://github.com/ksy336" target="_blank" rel="noreferrer">

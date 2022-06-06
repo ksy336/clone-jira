@@ -1,16 +1,16 @@
 import React from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import WelcomePage from './Pages/WelcomePage/index';
-import MainPage from './Pages/MainPage/index';
-import Login from './Pages/AuthorizationPage/LoginPage/index';
-import SignUp from './Pages/AuthorizationPage/SignUpPage/index';
-import { RequireAuth } from './hoc/RequireAuth';
-import Error from './Pages/ErrorPage/index';
-import EditProfile from './Pages/EditProfile';
-import Board from './Pages/BoardPage';
 import { useSelector } from 'react-redux';
-import './App.css';
 import { RootState } from './types/types';
+import WelcomePage from './pages/WelcomePage';
+import Login from './pages/AuthPage/LoginPage';
+import SignUp from './pages/AuthPage/SignUpPage';
+import { RequireAuth } from './hoc/RequireAuth';
+import MainPage from './pages/MainPage';
+import EditProfile from './pages/EditProfilePage';
+import Error from "./pages/ErrorPage";
+import './App.css';
+import Board from './pages/BoardPage';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.signIn.isAuth);

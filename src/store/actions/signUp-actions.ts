@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getUserData, showError, setIsLoading } from '../slices/signUp-slice';
+import { getUserData, showError, setIsLoading, getUserId } from '../slices/signUp-slice';
 import { setCookie } from 'typescript-cookie';
 import { API_URL } from '../../common/constants';
 
@@ -28,6 +28,7 @@ export const sendingFormSignUp = (signUpData) => {
       }
       const data = await response.data;
       savedData = setCookie('id', data.id, { expires: 1 });
+      dispatch(getUserId(data.id));
       return data;
     };
     try {
