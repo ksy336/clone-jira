@@ -7,7 +7,7 @@ import deleteBoard from '../../../store/actions/deleteBoard-actions';
 import { removeBoard } from '../../../store/slices/board-slice';
 import { dispatchStore, RootState } from '../../../types/types';
 import getBoardById from '../../../store/actions/getBoardById-actions';
-import "./CardItem.scss";
+import './CardItem.scss';
 
 const CardItem = (props) => {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const CardItem = (props) => {
   const boardHandler = () => {
     dispatchStore(getBoardById(id));
     navigate(`/board/${id}`);
-  }
+  };
 
   return (
     <>
@@ -57,14 +57,9 @@ const CardItem = (props) => {
       )}
       <div className="site-card-border-less-wrapper">
         {error && <p>Deleting board failed!</p>}
-          <Card
-            title={title}
-            bordered={false}
-            className="card-board"
-            onClick={boardHandler}
-          >
-            <p>{description}</p>
-          </Card>
+        <Card title={title} bordered={false} className="card-board" onClick={boardHandler}>
+          <p>{description}</p>
+        </Card>
         <Button
           type="primary"
           onClick={deleteBoardHandler}

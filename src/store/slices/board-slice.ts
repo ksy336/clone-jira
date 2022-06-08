@@ -10,7 +10,10 @@ const initialState: BoardState = {
     title: "",
     description: "",
     id: "",
-    columns: [],
+    columns: [{
+      id: "",
+      tasks: []
+    }],
   },
   error: null,
   titleColumn: "",
@@ -53,6 +56,12 @@ const boardSlice = createSlice({
     addColumn(state, action) {
       state.boardData.columns = [...state.boardData.columns, action.payload];
     },
+    // передать columnId как аргумент
+    // addTaskData(state, action) {
+    //   const id = action.payload;
+    //   console.log(id);
+    //   state.boardData.columns = state.boardData.columns.filter((column) => column.id === id);
+    // }
   }
 });
 export const {

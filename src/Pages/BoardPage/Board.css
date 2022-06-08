@@ -18,4 +18,25 @@
   margin-left: 20px;
 }
 
+.tasks {
+  overflow-y: scroll;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+}
+
+.button-task {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.task-delete-icon {
+  align-self: flex-end;
+}
+
+.task-content {
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
 /*# sourceMappingURL=Board.css.map */

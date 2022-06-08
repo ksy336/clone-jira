@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'antd';
 import Footer from '../../components/Footer/index';
 import { Link } from 'react-router-dom';
-import "./WelcomePage.scss";
+import './WelcomePage.scss';
 
 const WelcomeView = ({ isLogged, signOutClick }) => {
   return (

@@ -8,7 +8,7 @@ import SignUp from './pages/AuthPage/SignUpPage';
 import { RequireAuth } from './hoc/RequireAuth';
 import MainPage from './pages/MainPage';
 import EditProfile from './pages/EditProfilePage';
-import Error from "./pages/ErrorPage";
+import Error from './pages/ErrorPage';
 import './App.css';
 import Board from './pages/BoardPage';
 

@@ -1,20 +1,28 @@
 import React, { ChangeEvent } from 'react';
-import Header from "../../components/Header/index";
+import Header from '../../components/Header/index';
 import Footer from '../../components/Footer';
 import { Card, Button, Form, Input } from 'antd';
-import Modal from "../../components/Modal/Modal";
+import Modal from '../../components/Modal/Modal';
 import { getEnteredTitle } from '../../store/slices/board-slice';
 import { dispatchStore } from '../../types/types';
 import ColumnCard from './BoardComponents/ColumnCard';
 
-const BoardView = ({titleValue, description, createColumnHandler, showColumnModal, modalHandler, createColumnSubmit, boardId}) => {
+const BoardView = ({
+  titleValue,
+  description,
+  createColumnHandler,
+  showColumnModal,
+  modalHandler,
+  createColumnSubmit,
+  boardId,
+}) => {
   return (
     <>
       {showColumnModal && (
         <Modal onConfirm={modalHandler}>
-        <header className="header">
-          <h2>Add Column</h2>
-        </header>
+          <header className="header">
+            <h2>Add Column</h2>
+          </header>
           <Form
             name="basic"
             labelCol={{ span: 6 }}
@@ -23,33 +31,29 @@ const BoardView = ({titleValue, description, createColumnHandler, showColumnModa
             onFinish={createColumnSubmit}
             autoComplete="off"
           >
-              <Input
-                style={{margin: 10,
-                  marginRight: 10.
-                }}
-                placeholder="Enter column title"
-                onChange={(e) => {dispatchStore(getEnteredTitle(e.target.value))}}
-              />
+            <Input
+              style={{ margin: 10, marginRight: 10 }}
+              placeholder="Enter column title"
+              onChange={(e) => {
+                dispatchStore(getEnteredTitle(e.target.value));
+              }}
+            />
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <footer className="actions">
                 <Button type="primary" htmlType="submit">
                   Add Column
                 </Button>
                 <Button type="primary" onClick={modalHandler}>
-                 Cancel
+                  Cancel
                 </Button>
               </footer>
             </Form.Item>
           </Form>
-      </Modal>
+        </Modal>
       )}
-      <Header/>
+      <Header />
       <div className="site-card-border-less-wrapper">
-        <Card
-          title={`Board: ${titleValue}`}
-          bordered={false}
-          style={{margin: 10, opacity: 0.7}}
-        >
+        <Card title={`Board: ${titleValue}`} bordered={false} style={{ margin: 10, opacity: 0.7 }}>
           <p>Description: {description}</p>
         </Card>
       </div>
@@ -58,10 +62,7 @@ const BoardView = ({titleValue, description, createColumnHandler, showColumnModa
           <ColumnCard boardId={boardId} />
           <Button
             type="primary"
-            style={{width: 200,
-              height: 50,
-              margin: 10,
-              marginTop: 30, }}
+            style={{ width: 200, height: 50, margin: 10, marginTop: 30 }}
             onClick={createColumnHandler}
           >
             + Add column

@@ -8,8 +8,7 @@ import { deleteUserProfile } from '../../store/actions/deleteUser-actions';
 import EditProfileView from './EditProfile-View';
 import { deleteUser } from '../../store/slices/deleteUser-slice';
 import { getAuth } from '../../store/slices/signin-slice';
-import {getUserData} from "../../store/slices/signUp-slice";
-
+import { getUserData } from '../../store/slices/signUp-slice';
 
 const EditProfileContainer = () => {
   const [showModal, setShowModal] = useState(false);

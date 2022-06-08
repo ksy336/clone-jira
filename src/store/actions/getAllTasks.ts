@@ -2,11 +2,11 @@ import axios from "axios";
 import { API_URL } from '../../common/constants';
 import {showError} from "../slices/signin-slice";
 import { getTokenFromCookie } from '../../common/helper';
-import { getBoardData } from "../slices/board-slice";
+import {addTaskItem} from "../slices/addTask-slice";
 
-const getBoardById = (id) => {
+const getAllTasks = (boardId, columnId) => {
   return async (dispatch) => {
-    const getBoard = async() => {
+    const getTasks = async() => {
       const options = {
         headers: {
           Authorization: `Bearer ${getTokenFromCookie()}`,
@@ -15,19 +15,19 @@ const getBoardById = (id) => {
           'Access-Control-Allow-Origin': '*',
         }
       }
-      const response = await axios.get(`${API_URL}boards/${id}`, options);
+      const response = await axios.get(`${API_URL}boards/${boardId}/columns/${columnId}/tasks`, options);
       if (!response) {
         throw new Error("Something went wrong!");
       }
-      dispatch(getBoardData(response.data));
       console.log(response.data);
+      //dispatch(addTaskItem(response.data));
       return response.data;
     }
     try {
-      await getBoard();
+      await getTasks();
     } catch (e) {
       dispatch(showError("Fetching board data failed!"));
     }
   }
 }
-export default getBoardById;
+export default getAllTasks;

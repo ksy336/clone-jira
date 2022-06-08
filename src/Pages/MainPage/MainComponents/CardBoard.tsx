@@ -3,9 +3,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../types/types';
 import CardItem from './CardItem';
 
-
-
-
 export interface IBoard {
   title: string;
   description: string;

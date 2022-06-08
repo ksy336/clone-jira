@@ -9,10 +9,12 @@ import { FormState } from './SignUp-Types';
 let formData;
 
 const SignUpContainer = () => {
-  const { name, login, password, error, isLoading } = useSelector((state: RootState) => state.signUp);
+  const { name, login, password, error, isLoading } = useSelector(
+    (state: RootState) => state.signUp
+  );
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {isAuth} = useSelector((state: RootState) => state.signIn);
+  const { isAuth } = useSelector((state: RootState) => state.signIn);
   console.log(isAuth, isLoading, error);
   const {
     register,
@@ -31,10 +33,10 @@ const SignUpContainer = () => {
     };
     dispatchStore(sendingFormSignUp(formData));
   };
-console.log(formData);
+  console.log(formData);
 
   useEffect(() => {
-    if (formData) navigate("/login");
+    if (formData) navigate('/login');
   }, [isSubmitSuccessful]);
 
   return (

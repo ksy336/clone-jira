@@ -3,13 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 export interface TaskState {
   title: string;
   description: string;
-  tasks: any[]
+  taskId: string;
 }
 
 const initialState: TaskState = {
   title: "",
   description: "",
-  tasks: []
+  taskId: ""
 }
 const taskSlice = createSlice({
   name: "task",
@@ -21,8 +21,8 @@ const taskSlice = createSlice({
     getDescription(state, action) {
       state.description = action.payload;
     },
-    addTaskItem(state, action) {
-      state.tasks = [...state.tasks, action.payload];
+    getId(state, action) {
+      state.taskId = action.payload;
     }
   }
 });
@@ -30,7 +30,7 @@ const taskSlice = createSlice({
 export const {
   getTitle,
   getDescription,
-  addTaskItem
+  getId
 } = taskSlice.actions;
 
 export default taskSlice.reducer;
