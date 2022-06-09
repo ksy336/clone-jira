@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BoardView from './Board-View';
 import { useSelector } from 'react-redux';
 import { dispatchStore, RootState } from '../../types/types';
-import postColumns from '../../store/actions/postColumns-actions';
 import getBoardById from '../../store/actions/getBoardById-actions';
-import ColumnCard from './BoardComponents/ColumnCard';
-import { addColumn, getBoardData } from '../../store/slices/board-slice';
+import { addColumn } from '../../store/slices/board-slice';
+import columnsService from '../../api/columns/columns-service';
 import './Board.scss';
 
 const BoardContainer = () => {
@@ -16,19 +15,42 @@ const BoardContainer = () => {
     id,
   } = useSelector((state: RootState) => state.board.boardData);
   const { titleColumn: title } = useSelector((state: RootState) => state.board);
+
+  useEffect(() => {
+    getColumnData();
+  }, []);
+
+  const getColumnData = async () => {
+    try {
+      await columnsService.getAllColumns(id);
+    } catch (e) {
+      throw new Error('Getting column data failed!');
+    }
+  };
+  const createColumn = async (boardId: string, title) => {
+    try {
+      await columnsService.addColumn(boardId, title);
+      await getColumnData();
+    } catch (e) {
+      throw new Error('Failed');
+    }
+  };
+
   const createColumnHandler = () => {
     setShowColumnModal(true);
   };
   const modalHandler = () => {
     setShowColumnModal(false);
   };
-  const createColumnSubmit = () => {
+
+  const createColumnSubmit = async () => {
     const columnTitle = {
       title,
     };
-    dispatchStore(postColumns(id, columnTitle));
+    await createColumn(id, columnTitle);
+    //dispatchStore(postColumns(id, columnTitle));
     dispatchStore(getBoardById(id));
-    //dispatchStore(getBoardData(columnTitle));
+    getColumnData();
     dispatchStore(addColumn(columnTitle));
     setShowColumnModal(false);
   };

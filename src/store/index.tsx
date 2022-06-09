@@ -1,5 +1,4 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import storage from 'redux-persist/lib/storage';
 import { CookieStorage } from 'redux-persist-cookie-storage';
 import signUpData from './slices/signUp-slice';
 import signInData from './slices/signin-slice';
@@ -8,7 +7,7 @@ import edit from './slices/edit-slice';
 import deleteUser from './slices/deleteUser-slice';
 import newBoard from './slices/board-slice';
 import task from './slices/task-slices';
-import addTask from './slices/addTask-slice';
+
 import {
   persistStore,
   persistReducer,
@@ -29,7 +28,6 @@ const rootReducer = combineReducers({
   delete: deleteUser,
   board: newBoard,
   task: task,
-  addTask: addTask,
 });
 const persistConfig = {
   key: 'root',

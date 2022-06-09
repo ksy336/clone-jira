@@ -2,8 +2,7 @@ import { getTokenFromCookie } from '../../common/helper';
 import axios from 'axios';
 import { API_URL } from '../../common/constants';
 import { ICreateTask } from '../../types/types';
-import { addTaskItem } from '../../store/slices/addTask-slice';
-import { getId } from '../../store/slices/task-slices';
+
 
 class TasksService {
   async getAllTasks(boardId: string, columnId: string) {
@@ -19,7 +18,6 @@ class TasksService {
     if (!response) {
       throw new Error("Something went wrong!");
     }
-    //dispatch(addTaskItem(response.data));
     const data = await response.data;
     return data;
   }
@@ -37,8 +35,6 @@ class TasksService {
       throw new Error("Fetching task data failed!");
     }
     const data = await response.data;
-    // dispatch(addTaskItem(data));
-    // dispatch(getId(data.id));
 
     return data;
   }

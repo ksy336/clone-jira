@@ -7,8 +7,7 @@ import deleteColumn from '../../../store/actions/deleteColumn-actions';
 import { useSelector } from 'react-redux';
 import BoardTasks from './BoardTasks';
 
-
-const CardItem = ({ titleForColumn, id }) => {
+const ColumnItem = ({ titleForColumn, id }) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const boardId = useSelector((state: RootState) => state.board.boardData.id);
 
@@ -61,4 +60,4 @@ const CardItem = ({ titleForColumn, id }) => {
   );
 };
 
-export default CardItem;
+export default ColumnItem;

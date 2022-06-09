@@ -1,7 +1,5 @@
 import React from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from './types/types';
 import WelcomePage from './pages/WelcomePage';
 import Login from './pages/AuthPage/LoginPage';
 import SignUp from './pages/AuthPage/SignUpPage';
@@ -13,7 +11,6 @@ import './App.css';
 import Board from './pages/BoardPage';
 
 function App() {
-  const isAuth = useSelector((state: RootState) => state.signIn.isAuth);
   return (
     <BrowserRouter>
       <Routes>
@@ -23,7 +20,7 @@ function App() {
         <Route
           path="/main"
           element={
-            <RequireAuth isAuth={isAuth}>
+            <RequireAuth>
               <MainPage />
             </RequireAuth>
           }
@@ -31,7 +28,7 @@ function App() {
         <Route
           path="/edit"
           element={
-            <RequireAuth isAuth={isAuth}>
+            <RequireAuth>
               <EditProfile />
             </RequireAuth>
           }
@@ -39,7 +36,7 @@ function App() {
         <Route
           path="/board/:id"
           element={
-            <RequireAuth isAuth={isAuth}>
+            <RequireAuth>
               <Board />
             </RequireAuth>
           }

@@ -3,8 +3,6 @@ import { getUserData, showError, setIsLoading, getUserId } from '../slices/signU
 import { setCookie } from 'typescript-cookie';
 import { API_URL } from '../../common/constants';
 
-export let savedData;
-
 export const sendingFormSignUp = (signUpData) => {
   return async (dispatch) => {
     dispatch(showError(null));
@@ -27,7 +25,7 @@ export const sendingFormSignUp = (signUpData) => {
         throw new Error(`${response.data.message}`);
       }
       const data = await response.data;
-      savedData = setCookie('id', data.id, { expires: 1 });
+      setCookie('id', data.id);
       dispatch(getUserId(data.id));
       return data;
     };

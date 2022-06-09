@@ -20,7 +20,6 @@ const getBoardById = (id) => {
         throw new Error("Something went wrong!");
       }
       dispatch(getBoardData(response.data));
-      console.log(response.data);
       return response.data;
     }
     try {

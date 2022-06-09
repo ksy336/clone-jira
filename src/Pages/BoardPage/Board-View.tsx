@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import Header from '../../components/Header/index';
 import Footer from '../../components/Footer';
 import { Card, Button, Form, Input } from 'antd';
@@ -31,13 +31,19 @@ const BoardView = ({
             onFinish={createColumnSubmit}
             autoComplete="off"
           >
-            <Input
-              style={{ margin: 10, marginRight: 10 }}
-              placeholder="Enter column title"
-              onChange={(e) => {
-                dispatchStore(getEnteredTitle(e.target.value));
-              }}
-            />
+            <Form.Item
+              label="Title"
+              name="title"
+              rules={[{ required: true, message: 'Please input title!' }]}
+            >
+              <Input
+                style={{ margin: 10, marginRight: 10 }}
+                placeholder="Enter column title"
+                onChange={(e) => {
+                  dispatchStore(getEnteredTitle(e.target.value));
+                }}
+              />
+            </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <footer className="actions">
                 <Button type="primary" htmlType="submit">
@@ -59,7 +65,7 @@ const BoardView = ({
       </div>
       <main className="column-wrapper">
         <div className="flex-cards">
-          <ColumnCard boardId={boardId} />
+          <ColumnCard />
           <Button
             type="primary"
             style={{ width: 200, height: 50, margin: 10, marginTop: 30 }}

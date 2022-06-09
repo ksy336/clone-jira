@@ -1,5 +1,5 @@
 import React from 'react';
-import ColumnItem from './CardItem';
+import ColumnItem from './ColumnItem';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../types/types';
 
@@ -18,24 +18,19 @@ export interface ITask {
   files?: Array<string>;
 }
 
-const ColumnCard = ({ boardId }) => {
+const ColumnCard = () => {
   const columns = useSelector((state: RootState) => state.board.boardData.columns);
   return (
     <>
       {columns?.length > 0 ? (
         <div className="columns-container">
-          {columns?.map(({ id, title, order, tasks }: IColumn) => (
-            <ColumnItem
-              key={Math.random().toString()}
-              titleForColumn={title}
-              id={id}
-            />
+          {columns?.map(({ id, title }: IColumn) => (
+            <ColumnItem key={Math.random().toString()} titleForColumn={title} id={id} />
           ))}
         </div>
       ) : (
         <div>No columns</div>
-      )
-      }
+      )}
     </>
   );
 };

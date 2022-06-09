@@ -3,58 +3,53 @@ import tasksService from '../../../api/tasks/tasks-service';
 import { getCookie } from 'typescript-cookie';
 import Modal from '../../../components/Modal/Modal';
 import { Button, Card, Form, Input } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
-import { dispatchStore, RootState } from '../../../types/types';
-import deleteTask from '../../../store/actions/deleteTask-actions';
-import { getDescription, getTitle } from '../../../store/slices/task-slices';
+import { BoardColumnsTaskCreate } from './types';
 
-interface BoardColumnsTaskCreate {
-  title: string;
-  description: string;
-}
-const BoardTasks = ({boardId, columnId}) => {
+const BoardTasks = ({ boardId, columnId }) => {
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [tasks, setTasks] = useState([]);
-  //const taskId = useSelector((state: RootState) => state.task.taskId);
-  const [currentTask, setCurrentTask] = useState();
   const userId = getCookie('id');
-  const [deleteTaskModal, setDeleteTaskModal] = useState(false);
- // const { title, description } = useSelector((state: RootState) => state.task);
-
 
   useEffect(() => {
+    const getTasks = async () => {
+      try {
+        const tasks = await tasksService.getAllTasks(boardId, columnId);
+        setTasks(tasks);
+      } catch (e) {
+        throw new Error('Getting tasks data failed!');
+      }
+    };
     getTasks();
-  }, []);
+  }, [boardId, columnId]);
 
-  const getTasks = async() => {
+  const getTasks = async () => {
     try {
       const tasks = await tasksService.getAllTasks(boardId, columnId);
       setTasks(tasks);
-    } catch(e) {
-      throw new Error("Getting tasks data failed!");
+    } catch (e) {
+      throw new Error('Getting tasks data failed!');
     }
-  }
+  };
   const onCreateTask = async (columnId: string, values: unknown) => {
-    const {title, description} = values as BoardColumnsTaskCreate;
+    const { title, description } = values as BoardColumnsTaskCreate;
     try {
       await tasksService.createTask(userId, {
         boardId,
         columnId,
         title,
-        description
+        description,
       });
       await getTasks();
     } catch {
-      throw new Error("Creating task failed!");
+      throw new Error('Creating task failed!');
     }
-  }
+  };
   const deleteTask = async (taskId: string) => {
     try {
       await tasksService.deleteTask(boardId, columnId, taskId);
       await getTasks();
-    } catch(e) {
-      throw new Error("Deleting task failed!");
+    } catch (e) {
+      throw new Error('Deleting task failed!');
     }
   };
 
@@ -62,15 +57,6 @@ const BoardTasks = ({boardId, columnId}) => {
     console.log(taskId);
     deleteTask(taskId);
   };
-  const modalHandler = () => {
-    setDeleteTaskModal(false);
-  };
-  // const deleteTaskHandler = (taskId: string) => {
-  //   deleteTask(taskId);
-  //   // dispatchStore(deleteTask(boardId, id, taskId));
-  //   // dispatchStore(removeTask(taskId));
-  //   setDeleteTaskModal(false);
-  // };
 
   const createTaskSubmit = (values) => {
     onCreateTask(columnId, values);
@@ -108,28 +94,15 @@ const BoardTasks = ({boardId, columnId}) => {
               name="title"
               rules={[{ required: true, message: 'Please input title!' }]}
             >
-              <Input
-                style={{ margin: 10, marginRight: 10 }}
-                placeholder="Enter task title"
-                onChange={(e) => {
-                  dispatchStore(getTitle(e.target.value));
-                }}
-              />
+              <Input style={{ margin: 10, marginRight: 10 }} placeholder="Enter task title" />
             </Form.Item>
             <Form.Item
               label="Description"
               name="description"
-              rules={[{ required: true, message: ('Please input description!') }]}
+              rules={[{ required: true, message: 'Please input description!' }]}
             >
-              <Input
-                style={{ margin: 10, marginRight: 10 }}
-                placeholder="Enter task description"
-                onChange={(e) => {
-                  dispatchStore(getDescription(e.target.value));
-                }}
-              />
+              <Input style={{ margin: 10, marginRight: 10 }} placeholder="Enter task description" />
             </Form.Item>
-
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <footer className="actions">
                 <Button type="primary" htmlType="submit">
@@ -143,23 +116,8 @@ const BoardTasks = ({boardId, columnId}) => {
           </Form>
         </Modal>
       )}
-      {/*{deleteTaskModal && (*/}
-      {/*  <Modal onConfirm={modalHandler}>*/}
-      {/*    <header className="header">*/}
-      {/*      <h2>Are You sure to delete task?</h2>*/}
-      {/*    </header>*/}
-      {/*    <footer className="actions">*/}
-      {/*      <Button type="primary" onClick={() => {}}>*/}
-      {/*        Delete*/}
-      {/*      </Button>*/}
-      {/*      <Button type="primary" onClick={modalHandler}>*/}
-      {/*        Cancel*/}
-      {/*      </Button>*/}
-      {/*    </footer>*/}
-      {/*  </Modal>*/}
-      {/*)}*/}
       <div className="tasks">
-      {tasks?.map(({id, title, description, order}) => (
+        {tasks?.map(({ id, title, description }) => (
           <Card
             key={id}
             size="small"
@@ -167,12 +125,19 @@ const BoardTasks = ({boardId, columnId}) => {
             title={title}
             className="task-content"
             extra={
-              <Button type="primary" onClick={() => {deleteTaskClick(id)}}>Delete task</Button>
+              <Button
+                type="primary"
+                onClick={() => {
+                  deleteTaskClick(id);
+                }}
+              >
+                Delete task
+              </Button>
             }
           >
             <div>{description}</div>
           </Card>
-      ))}
+        ))}
       </div>
     </>
   );

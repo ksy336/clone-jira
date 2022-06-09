@@ -15,7 +15,7 @@ const LoginContainer = () => {
 
   const {
     handleSubmit,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
     register,
     reset,
   } = useForm<LoginState>({ mode: 'onChange' });

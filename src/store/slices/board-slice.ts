@@ -54,14 +54,9 @@ const boardSlice = createSlice({
       state.boardData.columns = state.boardData.columns.filter((column: any) => column.id !== id);
     },
     addColumn(state, action) {
-      state.boardData.columns = [...state.boardData.columns, action.payload];
+      //state.boardData.columns = [...state.boardData.columns, action.payload];
+     state.boardData.columns = action.payload;
     },
-    // передать columnId как аргумент
-    // addTaskData(state, action) {
-    //   const id = action.payload;
-    //   console.log(id);
-    //   state.boardData.columns = state.boardData.columns.filter((column) => column.id === id);
-    // }
   }
 });
 export const {
