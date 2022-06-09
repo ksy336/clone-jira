@@ -6,10 +6,12 @@ import { removeColumn } from '../../../store/slices/board-slice';
 import deleteColumn from '../../../store/actions/deleteColumn-actions';
 import { useSelector } from 'react-redux';
 import BoardTasks from './BoardTasks';
+import { useTranslation } from 'react-i18next';
 
 const ColumnItem = ({ titleForColumn, id }) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const boardId = useSelector((state: RootState) => state.board.boardData.id);
+  const { t } = useTranslation();
 
   const modalHandler = () => {
     setDeleteModal(false);
@@ -30,14 +32,14 @@ const ColumnItem = ({ titleForColumn, id }) => {
       {deleteModal && (
         <Modal onConfirm={modalHandler}>
           <header className="header">
-            <h2>Are You sure to delete column?</h2>
+            <h2>{t('modalColumn')}</h2>
           </header>
           <footer className="actions">
             <Button type="primary" onClick={deleteColumnHandler}>
-              Delete
+              {t('delete')}
             </Button>
             <Button type="primary" onClick={modalHandler}>
-              Cancel
+              {t('cancel')}
             </Button>
           </footer>
         </Modal>
@@ -48,7 +50,7 @@ const ColumnItem = ({ titleForColumn, id }) => {
           title={titleForColumn}
           extra={
             <Button type="primary" onClick={openModalHandler}>
-              Delete column
+              {t('deleteColumn')}
             </Button>
           }
           style={{ width: 300, borderRadius: 10, cursor: 'grab' }}

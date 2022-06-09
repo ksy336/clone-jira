@@ -1,12 +1,15 @@
 import React from 'react';
 import './Footer.scss';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer className="footer">
       <div className="footer-content">
         <div className="link">
-          Development:
+          {t('development')}:
           <a href="https://github.com/ksy336" target="_blank" rel="noreferrer">
             Kseniya Klimova
           </a>

@@ -9,6 +9,7 @@ import EditProfile from './pages/EditProfilePage';
 import Error from './pages/ErrorPage';
 import './App.css';
 import Board from './pages/BoardPage';
+import '../src/i18n/index';
 
 function App() {
   return (

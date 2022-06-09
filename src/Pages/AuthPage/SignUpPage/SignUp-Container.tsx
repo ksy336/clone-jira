@@ -6,6 +6,11 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { sendingFormSignUp } from '../../../store/actions/signUp-actions';
 import { FormState } from './SignUp-Types';
+import { useTranslation } from 'react-i18next';
+import useSticky from '../../../hooks/useSticky';
+import { ItemType } from 'antd/lib/menu/hooks/useItems';
+import SwitchLanguage from '../../../components/Switch/Switch';
+import LoginView from '../LoginPage/Login-View';
 let formData;
 
 const SignUpContainer = () => {
@@ -14,6 +19,14 @@ const SignUpContainer = () => {
   );
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const { sticky, headerRef } = useSticky();
+  const menuItems: ItemType[] = [
+    {
+      key: 'switch',
+      icon: <SwitchLanguage />,
+    },
+  ];
   const { isAuth } = useSelector((state: RootState) => state.signIn);
   console.log(isAuth, isLoading, error);
   const {
@@ -49,6 +62,10 @@ const SignUpContainer = () => {
       watch={watch}
       dispatch={dispatch}
       isLoading={isLoading}
+      t={t}
+      menuItems={menuItems}
+      sticky={sticky}
+      headerRef={headerRef}
     />
   );
 };

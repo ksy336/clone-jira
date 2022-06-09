@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import tasksService from '../../../api/tasks/tasks-service';
-import { getCookie } from 'typescript-cookie';
 import Modal from '../../../components/Modal/Modal';
 import { Button, Card, Form, Input } from 'antd';
 import { BoardColumnsTaskCreate } from './types';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../types/types';
 
 const BoardTasks = ({ boardId, columnId }) => {
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [tasks, setTasks] = useState([]);
-  const userId = getCookie('id');
-
+  const userId = useSelector((state: RootState) => state.signUp.id);
+  const {t} = useTranslation();
   useEffect(() => {
     const getTasks = async () => {
       try {
@@ -73,13 +75,13 @@ const BoardTasks = ({ boardId, columnId }) => {
     <>
       <div className="button-task">
         <Button type="dashed" onClick={addTaskModalHandler}>
-          + Add Task
+          + {t("addTask")}
         </Button>
       </div>
       {showTaskModal && (
         <Modal onConfirm={modalCloseHandler}>
           <header className="header">
-            <h2>Add new task</h2>
+            <h2>{t('addNewTask')}</h2>
           </header>
           <Form
             name="basic"
@@ -90,26 +92,26 @@ const BoardTasks = ({ boardId, columnId }) => {
             autoComplete="off"
           >
             <Form.Item
-              label="Title"
+              label={t('title')}
               name="title"
-              rules={[{ required: true, message: 'Please input title!' }]}
+              rules={[{ required: true, message: t('requiredTitle') }]}
             >
-              <Input style={{ margin: 10, marginRight: 10 }} placeholder="Enter task title" />
+              <Input style={{ margin: 10, marginRight: 10 }} placeholder={t('enterTaskT')} />
             </Form.Item>
             <Form.Item
-              label="Description"
+              label={t('description')}
               name="description"
-              rules={[{ required: true, message: 'Please input description!' }]}
+              rules={[{ required: true, message: t("requiredDescription") }]}
             >
-              <Input style={{ margin: 10, marginRight: 10 }} placeholder="Enter task description" />
+              <Input style={{ margin: 10, marginRight: 10 }} placeholder={t('enterDescript')} />
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <footer className="actions">
                 <Button type="primary" htmlType="submit">
-                  Create
+                  {t('create')}
                 </Button>
                 <Button type="primary" onClick={modalCloseHandler}>
-                  Cancel
+                  {t('cancel')}
                 </Button>
               </footer>
             </Form.Item>
@@ -131,7 +133,7 @@ const BoardTasks = ({ boardId, columnId }) => {
                   deleteTaskClick(id);
                 }}
               >
-                Delete task
+                {t('deleteTask')}
               </Button>
             }
           >

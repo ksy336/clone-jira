@@ -9,10 +9,11 @@ import EditProfileView from './EditProfile-View';
 import { deleteUser } from '../../store/slices/deleteUser-slice';
 import { getAuth } from '../../store/slices/signin-slice';
 import { getUserData } from '../../store/slices/signUp-slice';
+import { useTranslation } from 'react-i18next';
 
 const EditProfileContainer = () => {
   const [showModal, setShowModal] = useState(false);
-
+  const {t} = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userId = getCookie('id');
@@ -50,6 +51,7 @@ const EditProfileContainer = () => {
       modalHandler={modalHandler}
       showModal={showModal}
       deleteUserModalHandler={deleteUserModalHandler}
+      t={t}
     />
   );
 };

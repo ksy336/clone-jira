@@ -14,7 +14,6 @@ const logout = createSlice({
   initialState,
   reducers: {
     clearUserData() {
-      removeCookie("id");
       removeCookie("jwt");
     },
   },

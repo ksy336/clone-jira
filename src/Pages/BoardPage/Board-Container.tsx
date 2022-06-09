@@ -6,8 +6,10 @@ import getBoardById from '../../store/actions/getBoardById-actions';
 import { addColumn } from '../../store/slices/board-slice';
 import columnsService from '../../api/columns/columns-service';
 import './Board.scss';
+import { useTranslation } from 'react-i18next';
 
 const BoardContainer = () => {
+  const {t} = useTranslation();
   const [showColumnModal, setShowColumnModal] = useState(false);
   const {
     title: titleValue,
@@ -48,7 +50,6 @@ const BoardContainer = () => {
       title,
     };
     await createColumn(id, columnTitle);
-    //dispatchStore(postColumns(id, columnTitle));
     dispatchStore(getBoardById(id));
     getColumnData();
     dispatchStore(addColumn(columnTitle));
@@ -64,6 +65,7 @@ const BoardContainer = () => {
       modalHandler={modalHandler}
       createColumnSubmit={createColumnSubmit}
       boardId={id}
+      t={t}
     />
   );
 };

@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Switch, Layout, Menu, Form, Input, Button } from 'antd';
+import { Layout, Menu, Form, Input, Button } from 'antd';
+import { useTranslation } from 'react-i18next';
 import type { ItemType } from 'antd/lib/menu/hooks/useItems';
 import Modal from '../Modal/Modal';
 import { dispatchStore, RootState } from '../../types/types';
@@ -11,6 +12,8 @@ import { createNewBoardTitle, createNewBoardDescription } from '../../store/slic
 const { Header: HeaderComponent } = Layout;
 import useSticky from '../../hooks/useSticky';
 import { getAuth } from '../../store/slices/signin-slice';
+import SwitchLanguage from '../Switch/Switch';
+
 import './Header.scss';
 
 const HeaderMenu = () => {
@@ -18,6 +21,7 @@ const HeaderMenu = () => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showNewBoardModal, setShowNewBoardModal] = useState(false);
+  const { t } = useTranslation();
   const { sticky, headerRef } = useSticky();
   const { title, description } = useSelector((state: RootState) => state.board);
   const onChange = () => {};
@@ -48,21 +52,27 @@ const HeaderMenu = () => {
   const menuItems: ItemType[] = [
     {
       key: 'edit',
-      icon: <Link to="/edit">Edit profile</Link>,
+      icon: <Link to="/edit">{t('editProfile')}</Link>,
     },
     {
       key: 'out',
-      label: 'Sign Out',
-      onClick: signOutClick,
+      icon: (
+        <Button onClick={signOutClick} className="button-sign-out" type="link">
+          {t('signOut')}
+        </Button>
+      ),
     },
     {
       key: 'board',
-      label: 'Create new board',
-      onClick: createBoardClick,
+      icon: (
+        <Button onClick={createBoardClick} className="button-create" type="link">
+          {t('createBoard')}
+        </Button>
+      ),
     },
     {
       key: 'switch',
-      icon: <Switch defaultChecked onChange={onChange} />,
+      icon: <SwitchLanguage />,
     },
   ];
 
@@ -71,14 +81,14 @@ const HeaderMenu = () => {
       {showModal && (
         <Modal onConfirm={modalHandler}>
           <header className="header">
-            <h2>Do You want to Sign Out?</h2>
+            <h2>{t('modalSignOut')}</h2>
           </header>
           <footer className="actions">
             <Button type="primary" onClick={logoutHandler}>
-              Sign Out
+              {t('signOut')}
             </Button>
             <Button type="primary" onClick={modalHandler}>
-              Cancel
+              {t('cancel')}
             </Button>
           </footer>
         </Modal>
@@ -86,7 +96,7 @@ const HeaderMenu = () => {
       {showNewBoardModal && (
         <Modal onConfirm={modalHandler}>
           <header className="header">
-            <h2>Create new board</h2>
+            <h2>{t('createBoard')}</h2>
           </header>
           <Form
             name="basic"
@@ -97,9 +107,9 @@ const HeaderMenu = () => {
             autoComplete="off"
           >
             <Form.Item
-              label="Title"
+              label={t('title')}
               name="title"
-              rules={[{ required: true, message: 'Please input title of the board!' }]}
+              rules={[{ required: true, message: t('requiredTitle') }]}
             >
               <Input
                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -109,9 +119,9 @@ const HeaderMenu = () => {
             </Form.Item>
 
             <Form.Item
-              label="Description"
+              label={t('description')}
               name="description"
-              rules={[{ required: true, message: 'Please input description!' }]}
+              rules={[{ required: true, message: t('requiredDescription') }]}
             >
               <Input
                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -123,7 +133,7 @@ const HeaderMenu = () => {
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <footer className="actions">
                 <Button type="primary" htmlType="submit">
-                  Create
+                  {t('create')}
                 </Button>
               </footer>
             </Form.Item>

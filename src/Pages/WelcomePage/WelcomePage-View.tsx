@@ -4,7 +4,7 @@ import Footer from '../../components/Footer/index';
 import { Link } from 'react-router-dom';
 import './WelcomePage.scss';
 
-const WelcomeView = ({ isLogged, signOutClick }) => {
+const WelcomeView = ({ isLogged, signOutClick, t }) => {
   return (
     <div className="wrapper">
       <header className="welcome-header">
@@ -12,22 +12,22 @@ const WelcomeView = ({ isLogged, signOutClick }) => {
           {isLogged ? (
             <Link to="/main">
               <Button type="primary" className="btn-go">
-                Go To Main Page
+                {t('mainPage')}
               </Button>
               <Button type="primary" onClick={signOutClick}>
-                Sign Out
+                {t('signOut')}
               </Button>
             </Link>
           ) : (
             <div className="welcome-wrapper">
               <div className="button__log">
                 <Link to="/login">
-                  <Button type="primary">Sign In </Button>
+                  <Button type="primary">{t("signIn")}</Button>
                 </Link>
               </div>
               <div className="button__sign">
                 <Link to="/sign-up">
-                  <Button type="primary">Sign Up</Button>
+                  <Button type="primary">{t('signUpTo')}</Button>
                 </Link>
               </div>
             </div>
@@ -35,7 +35,7 @@ const WelcomeView = ({ isLogged, signOutClick }) => {
         </div>
       </header>
       <div className="welcome">
-        <h1 className="welcome-text">Welcome to the Project Management App</h1>
+        <h1 className="welcome-text">{t('welcome')}</h1>
       </div>
       <Footer />
     </div>

@@ -7,10 +7,12 @@ import deleteBoard from '../../../store/actions/deleteBoard-actions';
 import { removeBoard } from '../../../store/slices/board-slice';
 import { dispatchStore, RootState } from '../../../types/types';
 import getBoardById from '../../../store/actions/getBoardById-actions';
+import { useTranslation } from 'react-i18next';
 import './CardItem.scss';
 
 const CardItem = (props) => {
   const navigate = useNavigate();
+  const {t} = useTranslation();
   const { id, title, description } = props.item;
   const [showModal, setShowModal] = useState(false);
   const boardItems = useSelector((state: RootState) => state.board.boardItems);
@@ -43,20 +45,20 @@ const CardItem = (props) => {
       {showModal && (
         <Modal onConfirm={modalHandler}>
           <header className="header">
-            <h2>Do you really want to delete board?</h2>
+            <h2>{t("deleteBoard")}</h2>
           </header>
           <footer className="actions">
             <Button type="primary" onClick={deleteClickHandler}>
-              Delete
+              {t('delete')}
             </Button>
             <Button type="primary" onClick={modalHandler}>
-              Cancel
+              {t('cancel')}
             </Button>
           </footer>
         </Modal>
       )}
       <div className="site-card-border-less-wrapper">
-        {error && <p>Deleting board failed!</p>}
+        {error && <p>{t('boardFailed')}</p>}
         <Card title={title} bordered={false} className="card-board" onClick={boardHandler}>
           <p>{description}</p>
         </Card>
@@ -65,7 +67,7 @@ const CardItem = (props) => {
           onClick={deleteBoardHandler}
           style={{ marginLeft: 150, marginTop: 10 }}
         >
-          Delete board
+          {t('deleteBoardButton')}
         </Button>
       </div>
     </>

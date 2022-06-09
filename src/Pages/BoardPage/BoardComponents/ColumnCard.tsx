@@ -2,6 +2,7 @@ import React from 'react';
 import ColumnItem from './ColumnItem';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../types/types';
+import { useTranslation } from 'react-i18next';
 
 export interface IColumn {
   id: string;
@@ -20,6 +21,7 @@ export interface ITask {
 
 const ColumnCard = () => {
   const columns = useSelector((state: RootState) => state.board.boardData.columns);
+  const {t} = useTranslation();
   return (
     <>
       {columns?.length > 0 ? (
@@ -29,7 +31,7 @@ const ColumnCard = () => {
           ))}
         </div>
       ) : (
-        <div>No columns</div>
+        <div>{t('noColmns')}</div>
       )}
     </>
   );

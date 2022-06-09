@@ -14,14 +14,14 @@ const BoardView = ({
   showColumnModal,
   modalHandler,
   createColumnSubmit,
-  boardId,
+  boardId, t
 }) => {
   return (
     <>
       {showColumnModal && (
         <Modal onConfirm={modalHandler}>
           <header className="header">
-            <h2>Add Column</h2>
+            <h2>{t("addColn")}</h2>
           </header>
           <Form
             name="basic"
@@ -32,13 +32,13 @@ const BoardView = ({
             autoComplete="off"
           >
             <Form.Item
-              label="Title"
+              label={t("title")}
               name="title"
-              rules={[{ required: true, message: 'Please input title!' }]}
+              rules={[{ required: true, message: t("requiredTitle") }]}
             >
               <Input
                 style={{ margin: 10, marginRight: 10 }}
-                placeholder="Enter column title"
+                placeholder={t("enterColumn")}
                 onChange={(e) => {
                   dispatchStore(getEnteredTitle(e.target.value));
                 }}
@@ -47,10 +47,10 @@ const BoardView = ({
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <footer className="actions">
                 <Button type="primary" htmlType="submit">
-                  Add Column
+                  {t("addCon")}
                 </Button>
                 <Button type="primary" onClick={modalHandler}>
-                  Cancel
+                  {t("cancel")}
                 </Button>
               </footer>
             </Form.Item>
@@ -60,7 +60,7 @@ const BoardView = ({
       <Header />
       <div className="site-card-border-less-wrapper">
         <Card title={`Board: ${titleValue}`} bordered={false} style={{ margin: 10, opacity: 0.7 }}>
-          <p>Description: {description}</p>
+          <p>{t('description')}: {description}</p>
         </Card>
       </div>
       <main className="column-wrapper">
@@ -71,7 +71,7 @@ const BoardView = ({
             style={{ width: 200, height: 50, margin: 10, marginTop: 30 }}
             onClick={createColumnHandler}
           >
-            + Add column
+            + {t("addColn")}
           </Button>
         </div>
       </main>

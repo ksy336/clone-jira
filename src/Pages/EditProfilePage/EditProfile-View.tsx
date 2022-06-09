@@ -10,27 +10,27 @@ const EditProfileView = ({
   deleteClickHandler,
   modalHandler,
   showModal,
-  deleteUserModalHandler,
+  deleteUserModalHandler, t
 }) => {
   return (
     <>
       {showModal && (
         <Modal onConfirm={modalHandler}>
           <header className="header">
-            <h2>Do You want to delete an account?</h2>
+            <h2>{t('deleteAnAccount')}</h2>
           </header>
           <footer className="actions">
             <Button type="primary" onClick={deleteUserModalHandler}>
-              Delete
+              {t('delete')}
             </Button>
             <Button type="primary" onClick={modalHandler}>
-              Cancel
+              {t('cancel')}
             </Button>
           </footer>
         </Modal>
       )}
       <div className="edit-profile">
-        <h3>Edit profile</h3>
+        <h3>{t('editProfile')}</h3>
         <Form
           name="basic"
           labelCol={{ span: 8 }}
@@ -40,9 +40,9 @@ const EditProfileView = ({
           autoComplete="off"
         >
           <Form.Item
-            label="New Name"
+            label={t('newName')}
             name="new-name"
-            rules={[{ required: true, message: 'Please input your new name!' }]}
+            rules={[{ required: true, message: t('placeholderName') }]}
           >
             <Input
               onChange={(e) => {
@@ -52,9 +52,9 @@ const EditProfileView = ({
           </Form.Item>
 
           <Form.Item
-            label="New Login"
+            label={t('newLogin')}
             name="new-login"
-            rules={[{ required: true, message: 'Please input your new login!' }]}
+            rules={[{ required: true, message: t('newLoginRequired') }]}
           >
             <Input
               onChange={(e) => {
@@ -64,9 +64,9 @@ const EditProfileView = ({
           </Form.Item>
 
           <Form.Item
-            label="New Password"
+            label={t('newPassword')}
             name="new-password"
-            rules={[{ required: true, message: 'Please input your new password!' }]}
+            rules={[{ required: true, message: t('minimum8Symbols') }]}
           >
             <Input
               onChange={(e) => {
@@ -77,13 +77,13 @@ const EditProfileView = ({
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="button" onClick={deleteClickHandler}>
-              Delete account
+              {t('deleteAccount')}
             </Button>
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">
-              Submit
+              {t('save')}
             </Button>
           </Form.Item>
         </Form>

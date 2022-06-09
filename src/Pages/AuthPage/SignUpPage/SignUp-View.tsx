@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Alert, Button, Spin } from 'antd';
+import { Alert, Button, Layout, Menu, Spin } from 'antd';
+const { Header: HeaderComponent } = Layout;
 import {
   getNameData,
   getLoginData,
@@ -17,48 +18,56 @@ const SignUpView = ({
   dispatch,
   watch,
   error,
-  isLoading,
+  isLoading, t, menuItems, sticky, headerRef
 }) => {
   return (
     <>
       {isLoading && (
-        <Spin tip="Loading...">
+        <Spin tip={t('loading')}>
           <Alert
-            message="Please, wait!"
-            description="Please, wait! Your data is sending"
+            message={t('wait')}
+            description={t('waitDescription')}
             type="info"
           />
         </Spin>
       )}
+      <HeaderComponent className={`layout-header ${sticky ? 'is-sticky' : ''}`} ref={headerRef}>
+        <div style={{ zIndex: 1, width: '100%', margin: '0 auto' }}>
+          <Menu
+            style={{ background: 'transparent', display: 'flex', justifyContent: 'flex-end' }}
+            items={menuItems}
+          />
+        </div>
+      </HeaderComponent>
       <div className="form">
-        <h3>Sign Up to create an account</h3>
+        <h3>{t('signUp')}</h3>
         <form className="form-profile" onSubmit={handleSubmit(handleFormSubmit)}>
           <div className="form-content">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">{t('name')}</label>
             <input
               type="text"
               id="name"
               name="name"
-              placeholder="Enter your name"
+              placeholder={t('enterName')}
               className={` ${errors?.firstName ? 'input error-input' : 'input'}`}
               {...register('firstName', {
                 onChange: (e) => {
                   dispatch(getNameData(e.target.value));
                 },
-                required: 'Name is required',
+                required: t('nameRequired'),
                 minLength: {
                   value: 3,
-                  message: 'Minimum 3 symbols',
+                  message: t("minimum3Symbols"),
                 },
               })}
             />
             {errors?.firstName && (
-              <p className="text-invalid">{`${errors?.firstName.message || 'Error'}`}</p>
+              <p className="text-invalid">{`${errors?.firstName.message}`}</p>
             )}
-            <label htmlFor="login">Login</label>
+            <label htmlFor="login">{t("login")}</label>
             <input
               name="login"
-              placeholder="Enter your login"
+              placeholder={t("enterLogin")}
               type="text"
               id="login"
               className={`${errors?.login ? 'input error-input' : 'input'}`}
@@ -66,41 +75,41 @@ const SignUpView = ({
                 onChange: (e) => {
                   dispatch(getLoginData(e.target.value));
                 },
-                required: 'LoginPage is required',
+                required: t("loginIsRequired"),
                 minLength: {
                   value: 4,
-                  message: 'Minimum 4 symbols',
+                  message: t("minimum4Symbols"),
                 },
               })}
             />
             {errors?.login && (
-              <p className="text-invalid">{`${errors?.login.message || 'Error'}`}</p>
+              <p className="text-invalid">{`${errors?.login.message}`}</p>
             )}
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">{t('password')}</label>
             <input
               name="password"
               type="password"
               id="password"
-              placeholder="Enter your password"
+              placeholder={t('passwordRequired')}
               className={`${errors?.password ? 'input error-input' : 'input'}`}
               {...register('password', {
                 onChange: (e) => {
                   dispatch(getPasswordData(e.target.value));
                 },
-                required: 'Password is required',
+                required: t('passwordIsRequired'),
                 minLength: {
                   value: 8,
-                  message: 'Minimum 8 symbols',
+                  message: t('minimum8Symbols'),
                 },
               })}
             />
             {errors?.password && (
-              <p className="text-invalid">{`${errors?.password.message || 'Error'}`}</p>
+              <p className="text-invalid">{`${errors?.password.message}`}</p>
             )}
-            <label htmlFor="confirm-password">Confirm password</label>
+            <label htmlFor="confirm-password">{t('confirmPass')}</label>
             <input
               name="confirm-password"
-              placeholder="Confirm password"
+              placeholder={t('confirmPass')}
               type="password"
               id="confirm-password"
               className={`${errors?.confirmPassword ? 'input error-input' : 'input'}`}
@@ -108,26 +117,26 @@ const SignUpView = ({
                 onChange: (e) => {
                   dispatch(getConfirmPasswordData(e.target.value));
                 },
-                required: 'Confirm password',
+                required: t('confirmPass'),
                 validate: (value: string) => {
                   if (watch('password') !== value) {
-                    return "Passwords doesn't match";
+                    return t("passwordDoesnotMatch");
                   }
                 },
               })}
             />
             {errors?.confirmPassword && (
-              <p className="text-invalid">{`${errors?.confirmPassword.message || 'Error'}`}</p>
+              <p className="text-invalid">{`${errors?.confirmPassword.message}`}</p>
             )}
             <Link to="/login">
               <div className="account-settings">
-                <p>Do you already have an account? Login</p>
+                <p>{t("haveAnAccount")}</p>
               </div>
             </Link>
           </div>
           <div className="button-send">
             <Button type="primary" htmlType="submit">
-              Submit
+              {t("submitAccount")}
             </Button>
           </div>
           {error && <p className="text-invalid">{`${error}`}</p>}
