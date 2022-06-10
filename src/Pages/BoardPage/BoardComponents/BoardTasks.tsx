@@ -13,16 +13,11 @@ const BoardTasks = ({ boardId, columnId }) => {
   const userId = useSelector((state: RootState) => state.signUp.id);
   const {t} = useTranslation();
   useEffect(() => {
-    const getTasks = async () => {
-      try {
-        const tasks = await tasksService.getAllTasks(boardId, columnId);
-        setTasks(tasks);
-      } catch (e) {
-        throw new Error('Getting tasks data failed!');
-      }
-    };
     getTasks();
-  }, [boardId, columnId]);
+    return () => {
+      setTasks([]);
+    }
+  }, []);
 
   const getTasks = async () => {
     try {

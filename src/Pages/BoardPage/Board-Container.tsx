@@ -20,11 +20,13 @@ const BoardContainer = () => {
 
   useEffect(() => {
     getColumnData();
+    dispatchStore(getBoardById(id));
   }, []);
 
   const getColumnData = async () => {
     try {
       await columnsService.getAllColumns(id);
+      dispatchStore(getBoardById(id));
     } catch (e) {
       throw new Error('Getting column data failed!');
     }

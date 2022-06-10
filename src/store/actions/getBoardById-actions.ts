@@ -3,6 +3,7 @@ import { API_URL } from '../../common/constants';
 import {showError} from "../slices/signin-slice";
 import { getTokenFromCookie } from '../../common/helper';
 import { getBoardData } from "../slices/board-slice";
+import {getColumnArr} from "../slices/column-slice";
 
 const getBoardById = (id) => {
   return async (dispatch) => {
@@ -20,6 +21,7 @@ const getBoardById = (id) => {
         throw new Error("Something went wrong!");
       }
       dispatch(getBoardData(response.data));
+      dispatch(getColumnArr(response.data.columns));
       return response.data;
     }
     try {

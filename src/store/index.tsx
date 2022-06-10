@@ -7,6 +7,7 @@ import edit from './slices/edit-slice';
 import deleteUser from './slices/deleteUser-slice';
 import newBoard from './slices/board-slice';
 import task from './slices/task-slices';
+import column from "./slices/column-slice";
 
 import {
   persistStore,
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   delete: deleteUser,
   board: newBoard,
   task: task,
+  column: column
 });
 const persistConfig = {
   key: 'root',
