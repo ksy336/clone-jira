@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Card, Button } from 'antd';
+import { Card, Button, Layout } from 'antd';
 import Modal from '../../../components/Modal/Modal';
 import deleteBoard from '../../../store/actions/deleteBoard-actions';
 import { removeBoard } from '../../../store/slices/board-slice';
@@ -12,7 +12,7 @@ import './CardItem.scss';
 
 const CardItem = (props) => {
   const navigate = useNavigate();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const { id, title, description } = props.item;
   const [showModal, setShowModal] = useState(false);
   const boardItems = useSelector((state: RootState) => state.board.boardItems);
@@ -42,34 +42,36 @@ const CardItem = (props) => {
 
   return (
     <>
-      {showModal && (
-        <Modal onConfirm={modalHandler}>
-          <header className="header">
-            <h2>{t("deleteBoard")}</h2>
-          </header>
-          <footer className="actions">
-            <Button type="primary" onClick={deleteClickHandler}>
-              {t('delete')}
-            </Button>
-            <Button type="primary" onClick={modalHandler}>
-              {t('cancel')}
-            </Button>
-          </footer>
-        </Modal>
-      )}
-      <div className="site-card-border-less-wrapper">
-        {error && <p>{t('boardFailed')}</p>}
-        <Card title={title} bordered={false} className="card-board" onClick={boardHandler}>
-          <p>{description}</p>
-        </Card>
-        <Button
-          type="primary"
-          onClick={deleteBoardHandler}
-          style={{ marginLeft: 150, marginTop: 10 }}
-        >
-          {t('deleteBoardButton')}
-        </Button>
-      </div>
+      <Layout>
+        {showModal && (
+          <Modal onConfirm={modalHandler}>
+            <header className="header">
+              <h2>{t('deleteBoard')}</h2>
+            </header>
+            <footer className="actions">
+              <Button type="primary" onClick={deleteClickHandler}>
+                {t('delete')}
+              </Button>
+              <Button type="primary" onClick={modalHandler}>
+                {t('cancel')}
+              </Button>
+            </footer>
+          </Modal>
+        )}
+        <div className="site-card-border-less-wrapper">
+          {error && <p>{t('boardFailed')}</p>}
+          <Card title={title} bordered={false} className="card-board" onClick={boardHandler}>
+            <p>{description}</p>
+          </Card>
+          <Button
+            type="primary"
+            onClick={deleteBoardHandler}
+            style={{ marginLeft: 150, marginTop: 10 }}
+          >
+            {t('deleteBoardButton')}
+          </Button>
+        </div>
+      </Layout>
     </>
   );
 };

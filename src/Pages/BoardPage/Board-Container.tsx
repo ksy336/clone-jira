@@ -9,24 +9,23 @@ import './Board.scss';
 import { useTranslation } from 'react-i18next';
 
 const BoardContainer = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [showColumnModal, setShowColumnModal] = useState(false);
   const {
     title: titleValue,
     description,
     id,
   } = useSelector((state: RootState) => state.board.boardData);
+  console.log(id)
   const { titleColumn: title } = useSelector((state: RootState) => state.board);
 
   useEffect(() => {
     getColumnData();
-    dispatchStore(getBoardById(id));
   }, []);
 
   const getColumnData = async () => {
     try {
       await columnsService.getAllColumns(id);
-      dispatchStore(getBoardById(id));
     } catch (e) {
       throw new Error('Getting column data failed!');
     }

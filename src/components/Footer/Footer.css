@@ -1,17 +1,13 @@
-
 .link a {
   text-decoration: none;
   margin-left: 5px;
   color: black;
 }
- a:hover  {
+
+a:hover {
   transform: scale(1.1);
 }
 
-//.footer {
-//  margin-top: auto;
-//  position: static;
-//}
 .footer-content {
   display: flex;
   justify-content: space-between;
@@ -22,7 +18,8 @@
   background: white;
   border-radius: 9px;
 }
-@media screen and(max-width: 678px) {
+
+@media screen and (max-width: 678px) {
   .footer-content {
     display: flex;
     flex-direction: column;
@@ -30,3 +27,5 @@
     align-items: center;
   }
 }
+
+/*# sourceMappingURL=Footer.css.map */

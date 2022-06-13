@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 const WelcomeContainer = () => {
   const navigate = useNavigate();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const signOutClick = () => {
     removeCookie('jwt');
     removeCookie('id');

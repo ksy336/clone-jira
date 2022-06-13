@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 const ErrorContainer = () => {
   const navigate = useNavigate();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const handleClick = () => {
     navigate('/', { replace: true });
   };

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import tasksService from '../../../api/tasks/tasks-service';
 import Modal from '../../../components/Modal/Modal';
 import { Button, Card, Form, Input } from 'antd';
@@ -11,12 +12,13 @@ const BoardTasks = ({ boardId, columnId }) => {
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [tasks, setTasks] = useState([]);
   const userId = useSelector((state: RootState) => state.signUp.id);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
+
   useEffect(() => {
     getTasks();
     return () => {
       setTasks([]);
-    }
+    };
   }, []);
 
   const getTasks = async () => {
@@ -66,11 +68,21 @@ const BoardTasks = ({ boardId, columnId }) => {
     setShowTaskModal(true);
   };
 
+  const handleOnDragTaskEnd = (result) => {
+    if (!result.destination) return;
+    const items = Array.from(tasks);
+    console.log(items, result);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    console.log(items);
+    setTasks(items);
+  };
+
   return (
     <>
       <div className="button-task">
         <Button type="dashed" onClick={addTaskModalHandler}>
-          + {t("addTask")}
+          + {t('addTask')}
         </Button>
       </div>
       {showTaskModal && (
@@ -96,7 +108,7 @@ const BoardTasks = ({ boardId, columnId }) => {
             <Form.Item
               label={t('description')}
               name="description"
-              rules={[{ required: true, message: t("requiredDescription") }]}
+              rules={[{ required: true, message: t('requiredDescription') }]}
             >
               <Input style={{ margin: 10, marginRight: 10 }} placeholder={t('enterDescript')} />
             </Form.Item>
@@ -113,29 +125,45 @@ const BoardTasks = ({ boardId, columnId }) => {
           </Form>
         </Modal>
       )}
-      <div className="tasks">
-        {tasks?.map(({ id, title, description }) => (
-          <Card
-            key={id}
-            size="small"
-            type="inner"
-            title={title}
-            className="task-content"
-            extra={
-              <Button
-                type="primary"
-                onClick={() => {
-                  deleteTaskClick(id);
-                }}
-              >
-                {t('deleteTask')}
-              </Button>
-            }
-          >
-            <div>{description}</div>
-          </Card>
-        ))}
-      </div>
+      <DragDropContext onDragEnd={handleOnDragTaskEnd}>
+        <Droppable droppableId="task">
+          {(provided) => (
+            <div className="tasks" {...provided.droppableProps} ref={provided.innerRef}>
+              {tasks?.map(({ id, title, description }, index: number) => (
+                <Draggable key={id} draggableId={id} index={index}>
+                  {(provided) => (
+                    <div
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      ref={provided.innerRef}
+                    >
+                      <Card
+                        size="small"
+                        type="inner"
+                        title={title}
+                        className="task-content"
+                        extra={
+                          <Button
+                            type="primary"
+                            onClick={() => {
+                              deleteTaskClick(id);
+                            }}
+                          >
+                            {t('deleteTask')}
+                          </Button>
+                        }
+                      >
+                        <div>{description}</div>
+                      </Card>
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     </>
   );
 };

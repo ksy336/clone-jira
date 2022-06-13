@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header/index';
 import Footer from '../../components/Footer';
-import { Card, Button, Form, Input } from 'antd';
+import { Card, Button, Form, Input, Layout } from 'antd';
 import Modal from '../../components/Modal/Modal';
 import { getEnteredTitle } from '../../store/slices/board-slice';
 import { dispatchStore } from '../../types/types';
@@ -14,14 +14,15 @@ const BoardView = ({
   showColumnModal,
   modalHandler,
   createColumnSubmit,
-  boardId, t
+  boardId,
+  t,
 }) => {
   return (
     <>
       {showColumnModal && (
         <Modal onConfirm={modalHandler}>
           <header className="header">
-            <h2>{t("addColn")}</h2>
+            <h2>{t('addColn')}</h2>
           </header>
           <Form
             name="basic"
@@ -32,13 +33,13 @@ const BoardView = ({
             autoComplete="off"
           >
             <Form.Item
-              label={t("title")}
+              label={t('title')}
               name="title"
-              rules={[{ required: true, message: t("requiredTitle") }]}
+              rules={[{ required: true, message: t('requiredTitle') }]}
             >
               <Input
                 style={{ margin: 10, marginRight: 10 }}
-                placeholder={t("enterColumn")}
+                placeholder={t('enterColumn')}
                 onChange={(e) => {
                   dispatchStore(getEnteredTitle(e.target.value));
                 }}
@@ -47,35 +48,43 @@ const BoardView = ({
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <footer className="actions">
                 <Button type="primary" htmlType="submit">
-                  {t("addCon")}
+                  {t('addCon')}
                 </Button>
                 <Button type="primary" onClick={modalHandler}>
-                  {t("cancel")}
+                  {t('cancel')}
                 </Button>
               </footer>
             </Form.Item>
           </Form>
         </Modal>
       )}
-      <Header />
-      <div className="site-card-border-less-wrapper">
-        <Card title={`Board: ${titleValue}`} bordered={false} style={{ margin: 10, opacity: 0.7 }}>
-          <p>{t('description')}: {description}</p>
-        </Card>
-      </div>
-      <main className="column-wrapper">
-        <div className="flex-cards">
-          <ColumnCard />
-          <Button
-            type="primary"
-            style={{ width: 200, height: 50, margin: 10, marginTop: 30 }}
-            onClick={createColumnHandler}
+      <Layout>
+        <Header />
+        <div className="site-card-border-less-wrapper">
+          <Card
+            title={`Board: ${titleValue}`}
+            bordered={false}
+            style={{ margin: 10, opacity: 0.7 }}
           >
-            + {t("addColn")}
-          </Button>
+            <p>
+              {t('description')}: {description}
+            </p>
+          </Card>
         </div>
-      </main>
-      <Footer />
+        <main className="column-wrapper">
+          <div className="flex-cards">
+            <ColumnCard />
+            <Button
+              type="primary"
+              style={{ width: 200, height: 50, margin: 10, marginTop: 30 }}
+              onClick={createColumnHandler}
+            >
+              + {t('addColn')}
+            </Button>
+          </div>
+        </main>
+        <Footer />
+      </Layout>
     </>
   );
 };

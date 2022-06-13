@@ -46,7 +46,7 @@ const SignUpContainer = () => {
     };
     dispatchStore(sendingFormSignUp(formData));
   };
-  console.log(formData);
+
 
   useEffect(() => {
     if (formData) navigate('/login');

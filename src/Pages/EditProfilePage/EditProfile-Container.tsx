@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 
 const EditProfileContainer = () => {
   const [showModal, setShowModal] = useState(false);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userId = getCookie('id');
